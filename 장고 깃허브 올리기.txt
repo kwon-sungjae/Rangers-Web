@@ -1,0 +1,51 @@
+## 계속 쓰던경우
+1. 올리기
+git add .
+-> warning: in the working copy of 'static/main.css', LF will be replaced by CRLF the next time Git touches it <= 오류시(줄바꿈문자같은거 오류)
+-> git config --global core.autocrlf true <= 입력
+git commit -m "커밋내용"
+git push
+
+2. 내려받기(보통 pull로 먼저 내려받기로 수정된 내용이 이미 있는지 확인 먼저)
+git pull
+
+
+## 처음 설정할경우
+1. 프로젝트 폴더에 저장소 만들기 git init
+=> 터미널에서 가상환경 실행하고 프로젝트 폴더에서 > git init
+
+2. 파일을 깃에 등록하기
+git add .
+
+3. 커밋
+git commit -m "커밋내용"
+
+3-1. 커밋오류날경우(이메일과 이름 등록)
+git config --global user.email "[이메일주소]"
+git config --global user.name "[이름]"
+하고 다시 3번 커밋
+
+4. 수정사항(파일들 수정하고나서) 확인
+git diff
+
+4-1. 한글깨질경우
+set LC_ALL=C.UTF-8
+
+4-2. 코드 변경내용 되돌리기
+git restore pybo/templates/base.html
+
+4-3. 커밋내용 변경
+git commit -a -m "커밋 변경 내용"
+
+5-1. 브랜치명 확인
+git branch -v
+
+5-2. 브랜치명 바꾸기
+git branch -m [현재 branch name] [바꾸고싶은 branch name]
+
+6. 깃허브에 저장
+git remote add origin 깃허브주소
+git push -u origin master
+
+6-1.
+git push --set-upstream origin master

@@ -1,0 +1,59 @@
+1. 가상환경진입  
+cd venvs ==하고==> . blog.sh 만 실행해도됨
+cd myproject
+cd bin
+. activate
+
+2. 장고폴더이동
+cd ~/projects
+cd JunBlog
+
+3. 깃허브 내려받기
+git pull
+
+4. 서버실행
+python manage.py runserver 0:8000
+
+4-1. install 오류
+pip install -r requirements.txt
+
+##################################################
+구니콘 서비스 종료
+sudo systemctl stop blog.service
+
+구니콘 다시 시작
+sudo systemctl restart blog.service
+
+nginx 다시 시작
+sudo systemctl restart nginx
+
+#########sudo 명령어들 ################
+1. sudo rm 파일명 => 삭제
+2. sudo vi 파일명 => 생성/이미있으면 수정
+2-1. 커서로 이동 후 i(커서위치에서 편집모드시작)
+2-2. ESC로 명령모드로 전환
+2-3. :w(저장) :q(종료) (대문자 ZZ면 저장후 종료)
+
+#############변경된 프로그램 서버에 적용하기################
+앞으로 로컬 환경에서 파일 수정 후 서버에 적용하는 일련의 과정들은 이 책에서 생략할 것이다. 하지만 다음의 과정으로 서버에 프로그램을 적용해야 함을 잊지 말자.
+
+먼저 로컬 환경에서 프로그램이 변경되면 다음과 같은 순서로 적용한다
+
+[로컬 환경에서 프로그램이 변경된 경우]
+
+git add *
+git commit -m "수정내용 코멘트"
+git push
+그리고 서버 환경에서 변경된 내용을 다음과 같은 순서로 적용한다.
+
+[서버 환경에서 변경된 내용 적용]
+
+git pull
+sudo systemctl restart blog.service
+
+############.gitignore에 목록 추가#########################
+1. 추가하고
+2. git rm -r --cached .
+3. git add .
+4. git commit -m "캐시삭제"
+5. git push

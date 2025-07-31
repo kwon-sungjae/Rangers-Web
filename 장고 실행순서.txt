@@ -1,0 +1,12 @@
+1. 가상환경 만들고 진입해주세요.
+
+현재상황
+(가상환경) C:\~~~~\장고주소
+
+2. pip들 설치
+pip install -r req.txt
+
+3. 실행
+python manage.py runserver
+-> python manage.py runserver --settings=rangers.settings.local
+-> python manage.py runserver --settings=rangers.settings.prod

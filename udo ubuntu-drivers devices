@@ -1,0 +1,43 @@
+00:00.0 Host bridge: Intel Corporation 440FX - 82441FX PMC [Natoma] (rev 02)
+	Subsystem: Red Hat, Inc. Qemu virtual machine
+	Physical Slot: 0
+	Flags: fast devsel
+
+00:01.0 ISA bridge: Intel Corporation 82371SB PIIX3 ISA [Natoma/Triton II]
+	Subsystem: Red Hat, Inc. Qemu virtual machine
+	Physical Slot: 1
+	Flags: medium devsel
+
+00:01.1 IDE interface: Intel Corporation 82371SB PIIX3 IDE [Natoma/Triton II] (prog-if 80 [ISA Compatibility mode-only controller, supports bus mastering])
+	Subsystem: XenSource, Inc. 82371SB PIIX3 IDE [Natoma/Triton II]
+	Physical Slot: 1
+	Flags: bus master, medium devsel, latency 64
+	Memory at 000001f0 (32-bit, non-prefetchable) [virtual] [size=8]
+	Memory at 000003f0 (type 3, non-prefetchable) [virtual]
+	Memory at 00000170 (32-bit, non-prefetchable) [virtual] [size=8]
+	Memory at 00000370 (type 3, non-prefetchable) [virtual]
+	I/O ports at c100 [virtual] [size=16]
+	Kernel driver in use: ata_piix
+
+00:01.3 Bridge: Intel Corporation 82371AB/EB/MB PIIX4 ACPI (rev 01)
+	Subsystem: Red Hat, Inc. Qemu virtual machine
+	Physical Slot: 1
+	Flags: fast devsel, IRQ 9
+
+00:02.0 VGA compatible controller: Cirrus Logic GD 5446 (prog-if 00 [VGA controller])
+	Subsystem: XenSource, Inc. GD 5446
+	Physical Slot: 2
+	Flags: fast devsel
+	Memory at f0000000 (32-bit, prefetchable) [size=32M]
+	Memory at f3000000 (32-bit, non-prefetchable) [size=4K]
+	Expansion ROM at 000c0000 [virtual] [disabled] [size=128K]
+	Kernel modules: cirrusfb
+
+00:03.0 Unassigned class [ff80]: XenSource, Inc. Xen Platform Device (rev 01)
+	Subsystem: XenSource, Inc. Xen Platform Device
+	Physical Slot: 3
+	Flags: fast devsel, IRQ 28
+	I/O ports at c000 [size=256]
+	Memory at f2000000 (32-bit, prefetchable) [size=16M]
+	Kernel driver in use: xen-platform-pci
+

@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="kor">
+    <head>
+        <meta charset="UTF-8">
+        <title>로그인 / 회원가입 </title>
+        <link rel="stylesheet" href="{% static 'css/register.css' %}">
+        <style>
+            @font-face {
+                font-family: 'S-CoreDream-3Light';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+               </style>
+    </head>
+    <body style="font-family: 'S-CoreDream-3Light';">
+    <div class="green_circle2"></div>
+    <div class="pink_circle2"></div>
+    <div class="blue_circle2"></div>  
+        <div class="wrap">
+            <div class="form-wrap">
+                <p>RANGERS에 오신것을<br> 환영합니다!</p>
+                <div class="text-wrap">
+                </div>
+                <!-- <div class="social-icons">
+                    <img src="{% static 'css/img/google.png' %}" alt="facebook">
+                    <img src="img/tw.png" alt="twitter">
+                    <img src="img/gl.png" alt="google">
+                </div> -->
+               
+                <form method='post' action="{% url 'common:signup' %}" class="input-group" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include "common/form_errors.html" %}
+                    <input type="text" class="input-field" placeholder="이름" name='name' id='name' required
+                        value="{{ form.name.value|default_if_none:'' }}">
+                    <input type="text" class="input-field" placeholder="닉네임" name='nickname' id='nickname'
+                        value="{{ form.nickname.value|default_if_none:'' }}">
+                    <input type="email" class="input-field" placeholder="이메일 주소" name='email' id='email'
+                        value="{{ form.email.value|default_if_none:'' }}">
+                    <input type="password" class="input-field" placeholder="비밀번호 입력" name='password1' id='password1'
+                        value="{{ form.password1.value|default_if_none:'' }}">
+                    <input type="password" class="input-field" placeholder="비밀번호 확인" name='password2' id='password2'
+                        value="{{ form.password2.value|default_if_none:'' }}">
+                    <input type="file" class="input-field" name='profileimage' id='profileimage'
+                        value="{{ form.profileimage.value|default_if_none:'' }}">
+                    <button class="submit">회원가입</button>
+                </form>
+                
+            </div>
+        </div>
+       <div class="circles1">
+        <div class="green_circle"></div>
+        <div class="pink_circle"></div>
+        <div class="blue_circle"></div>
+       </div>
+    </body>
+</html>                         

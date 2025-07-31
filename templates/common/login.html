@@ -1,0 +1,88 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+    <title>Login #2</title>
+    <style>
+      @font-face {
+          font-family: 'S-CoreDream-3Light';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+          font-weight: normal;
+          font-style: normal;
+      }
+         </style>
+  </head>
+  <body style=" font-family: 'S-CoreDream-3Light';">
+  
+
+  <div class="d-lg-flex half">
+    <div class="bg order-1 order-md-2" >
+    </div>
+
+
+
+    <div class="contents order-2 order-md-1">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-7">
+            <h3>Login to <strong>RANGERS</strong></h3>
+            <div class="green_circle"></div>
+            <div class="green_circle"></div>
+            <div class="pink_circle"></div>
+            <div class="blue_circle"></div>
+            
+            <form method="post" action="{% url 'common:login' %}">
+              {% csrf_token %}
+              {% include "common/form_errors.html" %}
+              <div class="form-group first">
+                <label for="email">이메일</label>
+                <input type="text" class="form-control" placeholder="your-email@gmail.com" name='username' id="email"
+                  value="{{ form.email.value|default_if_none:'' }}">
+              </div>
+              <div class="form-group last mb-3">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" name='password' id="password"
+                  value="{{ form.password.value|default_if_none:'' }}">
+              </div>
+              <div class="d-flex mb-5 align-items-center">
+                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                  <input type="checkbox" checked="checked"/>
+                  <div class="control__indicator"></div>
+                </label>
+                <span class="ml-auto"><a href="/common/signup"class="forgot-pass">회원가입</a></span> 
+              </div>
+              
+              <input type="submit" class="btn btn-block btn-primary">
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+    {% block scripts %}
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% endblock %}
+  </body>
+</html>

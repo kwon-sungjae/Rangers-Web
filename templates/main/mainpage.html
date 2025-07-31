@@ -1,0 +1,313 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>레인저스 채팅</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+        <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+        <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <style>
+        @font-face {
+            font-family: 'S-CoreDream-3Light';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: '116watermelon';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.0/116watermelon.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            }
+
+           </style>
+    </head>
+    <body style='font-family: S-CoreDream-3Light';>
+    
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="/"><img src="{% static 'img/로고.png' %}" alt="" style="width: 110px;"></a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu 
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a href="/common/mypage" class="nav-link">{{ user.nickname }}</a></li>
+            <li class="nav-item"><a href="/common/logout" class="nav-link">Logout</a></li>
+            {% else %}
+            <li class="nav-item"><a href="/common/login" class="nav-link">로그인</a></li>
+            <li class="nav-item"><a href="/common/signup" class="nav-link">회원가입</a></li>
+            {% endif %}
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+
+    <div class="hero-wrap ftco-degree-bg" style="background-image: url({% static 'img/main-bg.jpg' %});" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div div class="container">
+            <div class="row no-gutters slider-text justify-content-center align-items-center">
+                <div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-end">
+                    <div class="text text-center" >
+                        <h1 class="mb-4" style="font-family: '116watermelon'">좋아하는 아티스트와<br>직접 소통한다!</h1>
+                        <p style="font-size: 18px;"> 서로를 존중하고 배려하는 건전한 채팅문화를 위한 악성 채팅 제재 서비스로 깨끗한 K팝 문화를 만드는 최애와 단둘이 프라이빗 메시지</p>
+                        <form action="{% url 'index' %}" class="search-location mt-md-5">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10 align-items-end">
+                                    <div class="form-group">
+                                        <div class="form-field">
+                                            <input type="text" class="form-control" id='kw' name='kw' placeholder="아티스트 검색하기" value="{{ kw|default_if_none:'' }}">
+                                            <button><span class="ion-ios-search"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div div class="mouse">
+			<a href="#" class="mouse-icon">
+				<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
+			</a>
+		</div>
+    </div>
+
+    <section class="ftco-section ftco-agent ftco-no-pt">
+    	<div class="container">
+    		<div class="row justify-content-center pb-5">
+                <div class="col-md-12 heading-section text-center ftco-animate" style="margin-top: 50px;">
+                    <span class="subheading">아티스트 Pick!</span>
+                    <h2 class="mb-4">Our Artist</h2>
+                </div>
+            </div>
+            <div class="row">
+                
+                {% for user in userlist %}
+                <div class="col-md-3 ftco-animate">
+                    <div class="agent">
+                        <div class="img">   
+                            <img src="{{ user.profileimage.url }}" class="img-fluid" width='100%' alt="Colorlib Template">
+                        </div>
+                        <div class="desc">
+                            <h3><a href="/feed/{{ user.nickname }}">{{ user.nickname }}</a></h3>
+                            <p class="h-info"><a href="/chat/{{ user.nickname }}" class="location" style="color:plum;">채팅하러 가기</a></p>
+                        </div>
+                    </div>                          
+                </div>
+                {% endfor %}
+            </div>
+    	</div>
+    </section>
+
+    <section class="ftco-section goto-here">
+    	<div class="container">
+    		<div class="row justify-content-center">
+                <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          	        <span class="subheading">Shop</span>
+                    <h2 class="mb-2">Offer For You</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="property-wrap ftco-animate">
+                        <a href="#" class="img" style="background-image: url({% static 'img/coupon1.jpg' %});"></a>
+                        <div class="text">
+                            <p class="price"><span class="old-price">4,200원</span><span class="orig-price">2,100원<small>/mo</small></span></p>
+
+                            <h3><a href="#">첫 구독 2개월 50%할인</a></h3>
+                            <span class="location">부가세 별도</span>
+                            <a href="#" class="d-flex align-items-center justify-content-center btn-custom">
+                                <span class="ion-ios-link"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="property-wrap ftco-animate">
+                        <a href="#" class="img" style="background-image: url({% static 'img/coupon2.gif' %});"></a>
+                        <div class="text">
+                            <p class="price"><span class="old-price">50,000원</span><span class="orig-price">35, 000원<small>/mo</small></span></p>
+                            <h3><a href="#">무제한 채팅 30%할인</a></h3>
+                            <span class="location">부가세  별도</span>
+                            <a href="#" class="d-flex align-items-center justify-content-center btn-custom">
+                                <span class="ion-ios-link"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="property-wrap ftco-animate">
+                        <a href="#" class="img" style="background-image: url({% static 'img/coupon3.gif' %});"></a>
+                        <div class="text">
+                            <p class="price"><span class="old-price">100,000</span><span class="orig-price">80,000원<small>/mo</small></span></p>
+                            <h3><a href="#">무제한 채팅 + 유료 서비스</a></h3>
+                            <span class="location">부가세 별도</span>
+                            <a href="#" class="d-flex align-items-center justify-content-center btn-custom">
+                                <span class="ion-ios-link"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+    </section>
+
+    <section class="ftco-section ftco-degree-bg services-section img mx-md-5" style="background-image: url({% static 'img/main-bg2.gif' %});">
+    	<div class="overlay" ></div>
+    	<div class="container">
+    		<div class="row justify-content-start mb-5">
+                <div class="col-md-6 text-center heading-section heading-section-white ftco-animate">
+                <span class="subheading">서비스 이용</span>
+                <h2 class="mb-3">How it use service</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+                            <div class="media block-6 services services-2" style="width:100%;">
+                                <div class="media-body py-md-4 text-center">
+                                    <div class="icon mb-3 d-flex align-items-center justify-content-center"><span>01</span></div>
+                                    <h3>구독권 구매하기</h3>
+                                    <p>Shop에서 원하는 정기 구독권을 구매</p>
+                                </div>
+                            </div>      
+                        </div>
+                        <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+                            <div class="media block-6 services services-2" style="width:100%;">
+                                <div class="media-body py-md-4 text-center">
+                                    <div class="icon mb-3 d-flex align-items-center justify-content-center"><span>02</span></div>
+                                    <h3>아티스트 선택</h3>
+                                    <p>좋아하는 아티스트를 선택하여 <br>채팅방으로 이동</p>
+                                </div>
+                            </div>      
+                        </div>
+                        <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+                            <div class="media block-6 services services-2" style="width:100%;">
+                                <div class="media-body py-md-4 text-center">
+                                    <div class="icon mb-3 d-flex align-items-center justify-content-center"><span>03</span></div>
+                                    <h3> 채팅하기</h3>
+                                    <p>최애와 프라이빗한 1대1 채팅을 즐겨요! </p>
+                                </div>
+                            </div>      
+                        </div>
+                        <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+                            <div class="media block-6 services services-2" style="width:100%;">
+                                <div class="media-body py-md-4 text-center">
+                                    <div class="icon mb-3 d-flex align-items-center justify-content-center"><span>04</span></div>
+                                    <h3>주의!</h3>
+                                    <p>아티스트와 채팅 중 부적절한 말을 3번 이상 할 시 계정이 영구정지 될 수 있으니 건전한 팬덤 채팅문화에 동참해주세요! </p>
+                                </div>
+                            </div>      
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+    </section>
+
+    <footer class="ftco-footer ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">RANGERS</h2>
+              <p>건전한 채팅문화를 위한 악성 채팅 제재 서비스</p>
+              <ul class="ftco-footer-social list-unstyled mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">Community</h2>
+              <ul class="list-unstyled">
+                <li><a href="/chat"><span class="icon-long-arrow-right mr-2"></span>채팅</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">About Us</h2>
+              <ul class="list-unstyled">
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>레인저스 소개</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Company</h2>
+              <ul class="list-unstyled">
+                <li><a href="/common/mypage"><span class="icon-long-arrow-right mr-2"></span>Press</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Contact</a></li>
+               
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">서울 동작구 보라매로 87 플레이데이터</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">02-123-4567</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope pr-4"></span><span class="text">crm7187566@RANGERS.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+	
+           
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+
+
+    {% block script %}  
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/aos.js' %}"></script>
+	<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+	<script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+	<script src="{% static 'js/scrollax.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+    {% endblock %}
+    </body>
+</html>

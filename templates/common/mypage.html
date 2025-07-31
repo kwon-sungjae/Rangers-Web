@@ -1,0 +1,221 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>mypage</title>
+  <style>
+  @font-face {
+            font-family: 'S-CoreDream-3Light';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+  </style>
+</head>                  
+
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"><img src="{% static 'img/로고.png' %}" alt="" style="width: 110px;"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu 
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+        {% if user.is_authenticated %}
+        <li class="nav-item"><a href="/common/mypage" class="nav-link">{{ user.nickname }}</a></li>
+        <li class="nav-item"><a href="/common/logout" class="nav-link">Logout</a></li>
+        {% else %}
+        <li class="nav-item"><a href="/common/login" class="nav-link">로그인</a></li>
+        <li class="nav-item"><a href="/common/signup" class="nav-link">회원가입</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END nav -->
+<body style="background: #f7f9fc;  font-family: 'S-CoreDream-3Light'; " >
+
+  <div class="container" style="margin-top: 8%;">
+    <div class="white-box">                                        
+      <div class="row">
+        <div class="col-md-8">
+          <div class="d-flex">
+            <img src="{{user.profileimage.url}}" class="rounded-4" alt="..." style="position: relative; bottom: 25px; right: 10px;"> 
+            <div class="flex-grow-1 ms-3 py-2"> 
+              
+              <h3 class="mb-0">{{ user.nickname }}</h3>
+              <p class="mb-2 width">{{ user.email }}</p>
+
+              <button class="btn btn-primary" href="/common/logout" style="background-color: #000000; border-style: none; font-weight: bold; position: relative; right: 110px;"><a href="/common/logout">로그아웃</a></button>
+            </div>   
+          </div>
+        </div>
+        <div class="col-md-4 mt-4 mt-md-1" style="font-size: 16px">
+      
+          <div class="col-6">
+            <div class="mypage-button" style="width :max-content; margin-left: 80%; width: 180%;">
+                <button class="mybtn">정보수정</button>
+                <button class="mybtn">공지사항</button>
+                <button class="mybtn">QnA</button>
+            </div>
+        </div>
+            
+            <div class="col-8">
+              <p style="margin-top: 10px; position: relative; top: 20px;">매너점수</p>
+            </div>
+            <div class="col-6"> 
+                <div class="progress" role="progressbar" style="width: 180%; height: 50%;">
+                    <div class="progress-bar text-bg-warning" style="width: {{ counting }}%">{{ user.counting }}/1000</div>
+                  </div>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="white-box">
+          <h4>Shop</h4>
+          <p>구독권 사러가기</p>
+        </div>                                                            
+      </div>
+      <div class="col-md-6">
+        <div class="white-box"> 
+          <h5 >구독한 Artist's </h5>
+          <img src="{{user.profileimage.url}}" class="rounded-4" alt="...">
+        </div>
+      </div>
+      <div class="col-md-3">                     
+        <div class="white-box">
+          <h5>구매기록</h5>
+          <li>첫 구독 2개월 50%할인</li>
+        </div>
+
+        
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <footer class="ftco-footer ftco-section">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-md">
+          <div class="ftco-footer-widget mb-4">
+            <h2 class="ftco-heading-2">RANGERS</h2>
+            <p>건전한 채팅문화를 위한 악성 채팅 제재 서비스</p>
+            <ul class="ftco-footer-social list-unstyled mt-5">
+              <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+              <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="ftco-footer-widget mb-4 ml-md-4">
+            <h2 class="ftco-heading-2">Community</h2>
+            <ul class="list-unstyled">
+              <li><a href="chat/"><span class="icon-long-arrow-right mr-2"></span>채팅</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="ftco-footer-widget mb-4 ml-md-4">
+            <h2 class="ftco-heading-2">About Us</h2>
+            <ul class="list-unstyled">
+              <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>레인저스 소개</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md">
+           <div class="ftco-footer-widget mb-4">
+            <h2 class="ftco-heading-2">Company</h2>
+            <ul class="list-unstyled">
+              <li><a href="common/mypage"><span class="icon-long-arrow-right mr-2"></span>Press</a></li>
+              <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Contact</a></li>
+             
+            </ul>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="ftco-footer-widget mb-4">
+            <h2 class="ftco-heading-2">Have a Questions?</h2>
+            <div class="block-23 mb-3">
+              <ul>
+                <li><span class="icon icon-map-marker"></span><span class="text">서울 동작구 보라매로 87 플레이데이터</span></li>
+                <li><a href="#"><span class="icon icon-phone"></span><span class="text">02-123-4567</span></a></li>
+                <li><a href="#"><span class="icon icon-envelope pr-4"></span><span class="text">crm7187566@RANGERS.com</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+
+         
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+        </div>
+      </div>
+    </div>
+  </footer>
+   
+
+  {% block script %}  
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/aos.js' %}"></script>
+	<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+	<script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+	<script src="{% static 'js/scrollax.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+  {% endblock %}
+
+
+
+
+ 
+
+</body>
+
+</html>

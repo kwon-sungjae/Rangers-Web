@@ -1,0 +1,52 @@
+.white-box {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0.5px 0.5px 2px 1px #eee;
+  }
+
+
+  .pill { 
+    display: inline-block;
+    border: 1px solid lightgray;
+    border-radius: 100px;
+    padding: 3px 12px 5px 12px;
+    margin-right: 2px;
+    margin-bottom: 5px;
+  }
+
+  .col-6{
+      width: 100%;
+  }
+
+  .mypage-button{
+      margin-left: 40%;
+      
+  }
+
+  .mybtn {
+      border-radius: 50px;
+      background-color: #000000;
+      color: white;
+      border-style: none;
+      font-weight: bold;
+  }
+
+  .rounded-4{
+    width: 80px;
+    height: 80px;
+    border-radius:  15px;
+    margin-left: 3%;
+    margin-top: 3%;
+   } 
+
+  .progress-bar{
+    background-color: rgba(255, 0, 0, 0.685);
+  }
+
+  .col-8 p{
+    color: #000000;
+  }
+
+
+  

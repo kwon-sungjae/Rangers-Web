@@ -1,0 +1,321 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chat-bg.css' %}"> 
+  <style>
+    @font-face {
+        font-family: 'S-CoreDream-3Light';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+   
+
+       </style>
+</head>
+<body style="padding-top: 8%;font-family: 'S-CoreDream-3Light';">
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container" style="width: 100%; padding-right: 15px; padding-left: 15px;margin-right: auto; margin-left: auto; ">
+      <a class="navbar-brand" href="/"><img src="{% static 'img/로고.png' %}" alt="" style="width: 110px;"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu 
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+          {% if user.is_authenticated %}
+          <li class="nav-item"><a href="/common/mypage" class="nav-link">{{ user.nickname }}</a></li>
+          <li class="nav-item"><a href="/common/logout" class="nav-link">Logout</a></li>
+          {% else %}
+          <li class="nav-item"><a href="/common/login" class="nav-link">로그인</a></li>
+          <li class="nav-item"><a href="/common/signup" class="nav-link">회원가입</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- END nav -->         
+  <section>
+    <div class="row mx-5">
+      <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+        
+        <form class="form-outline" method="get" action="{% url 'chat:room' room_name %}" >
+          <div class="input-group">
+            <input type="text" id="search_ke" class="form-control" id="kw" name='kw' placeholder="채팅방 검색하기" style="background-color: #ebf1f7;" value="{{ kw|default_if_none:'' }}" />
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-primary" id="room-name-submit" style="background-color:plum; border-style: none; color:white;width: 100%;">검색</button>
+            </div>
+          </div>
+        </form>
+        <div class="card">
+          <div class="card-body" style="overflow-y: auto; max-height:  570px;">
+            {% for user in userlist %}
+            {% if user.nickname == room_name %}
+            <ul class="list-unstyled mb-0" style="background-color:plum; border-radius: 0.5rem;">
+            {% else %}
+            <ul class="list-unstyled mb-0">
+            {% endif %}
+              <li class="p-2 border-bottom">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row" style="">
+                    <img src="{{ user.profileimage.url }}" alt="sunil" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" style="width:60px; height: 60px;"> 
+                    <div class="chat_ib" style='position: relative; top: 22px; left: 25px;' >
+                      <a href='/chat/{{ user.nickname }}' style="color: black;">{{ user.nickname }}</a>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <!-- 채팅 내용 -->
+      <div class="col-md-6 col-lg-7 col-xl-8">
+        <div class="room-name row">
+          <div class="col-lg-8">
+            <p style="font-size: 25px;">{{ room_name }}와 Live chat</p>
+          </div>
+          <div class="col-lg-4" role="progressbar">
+            <p class="mx-2">매너점수</p>
+            <div class="progress my-2 mx-2" id="scorebox">
+              <div class="progress-bar" style="width: {{ counting }}%; background-color: purple" id="score">{{ user.counting }}/1000</div>
+            </div>
+          </div>
+        </div>
+        <div class="list-unstyled msg_history"  id='add_message'  style="height: 500px;">
+          {% for chat in chatlist %}
+          {% if not chat.vilification %}
+          <!-- 채팅방 주인인가?(아티스트) -->
+          {% if request.user.nickname == room_name %}
+            <!-- 자기자신은 오른쪽, 나머지는 왼쪽 -->
+            {% if chat.author.nickname == request.user.nickname %}
+            <!-- 오른쪽 -->
+            <div class="outgoing_msg" >                        
+              <div class="d-flex justify-content-between mb-4" style="width: 400px; float: right;">
+                <div class="col-lg-10">
+                  <p class="fw-bold mb-0" style="float:right;">{{ chat.author }}</p>
+                  <div class="card w-100" style=" border-radius: 15px;">
+                    <div class="card-body d-flex justify-content-between p-3">
+                      <p>{{ chat.message }} </p>
+                    </div>
+                  </div>
+                  <p class="text-muted small mb-0" style="float:right;"><i class="far fa-clock"></i> {{ chat.create_date }}</p>
+                </div>
+                <div class="col-lg-2 px-0">
+                  <img src="{{chat.author.profileimage.url}}" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" style="width:60px; height: 60px;">
+                </div>
+              </div>
+            </div> 
+            {% else %}
+            <!-- 왼쪽 -->
+            <div class="d-flex justify-content-between mb-4" style="width: 300px;">
+              <div class="col-lg-3 px-0">
+                <img src="{{chat.author.profileimage.url}}" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" style="width:60px; height: 60px;"> <!--아티스트 사진-->
+              </div>
+              <div class="col-lg-10">
+                <p class="fw-bold mb-0">{{ chat.author }}</p> <!--아티스트 이름-->
+                <div class="card" style=" border-radius: 15px; width: 300px;">
+                  <div class="card-body d-flex justify-content-between p-3">
+                    <p>{{ chat.message }} </p>
+                  </div>
+                </div>
+                <p class="text-muted small mb-0"><i class="far fa-clock"></i> {{ chat.create_date }}</p>
+              </div>
+            </div>
+            {% endif %}
+          <!-- 채팅방 주인이 아니면 -->
+          {% else %}
+            <!-- 채팅방 주인은 왼쪽, 나머지 오른쪽 -->
+            {% if chat.author.nickname == room_name %}
+            <!-- 왼쪽 -->
+            <div class="d-flex justify-content-between mb-4" style="width: 300px;">
+              <div class="col-lg-3 px-0">
+                <img src="{{chat.author.profileimage.url}}" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" style="width:60px; height: 60px;"> <!--아티스트 사진-->
+              </div>
+              <div class="col-lg-10">
+                <p class="fw-bold mb-0">{{ chat.author }}</p> <!--아티스트 이름-->
+                <div class="card" style=" border-radius: 15px; width: 300px;">
+                  <div class="card-body d-flex justify-content-between p-3">
+                    <p>{{ chat.message }} </p>
+                  </div>
+                </div>
+                <p class="text-muted small mb-0"><i class="far fa-clock"></i> {{ chat.create_date }}</p>
+              </div>
+            </div>
+            {% else %}
+            <!-- 오른쪽 -->
+            <div class="outgoing_msg">                        
+              <div class="d-flex justify-content-between mb-4" style="width: 400px; float: right;">
+                <div class="col-lg-10">
+                  <p class="fw-bold mb-0" style="float:right;">{{ chat.author }}</p>
+                  <div class="card w-100" style=" border-radius: 15px;">
+                    <div class="card-body d-flex justify-content-between p-3">
+                      <p>{{ chat.message }} </p>
+                    </div>
+                  </div>
+                  <p class="text-muted small mb-0" style="float:right;"><i class="far fa-clock"></i> {{ chat.create_date }}</p>
+                </div>
+                <div class="col-lg-2 px-0">
+                  <img src="{{chat.author.profileimage.url}}" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" style="width:60px; height: 60px;">
+                </div>
+              </div>
+            </div> 
+            {% endif %}
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% if request.user.counting != 0 %}
+        <div class="type_msg">
+          <div class="input_msg_write row">
+            <input type="text" class="write_msg col-lg-11 mx-0 py-1" placeholder="예쁜 말 적어주세요~" name="chat" id="chat-message-input"  required />
+            <div class='col-lg-1 px-0' style="float:right;">
+              <button type="submit" class="msg_send_btn my-2 mx-2" id='chat-message-submit' sytle="margin:auto;"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+            </div>
+            {{ room_name|json_script:"room_name" }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% block script %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  var messageHistory = document.getElementById('add_message');
+  messageHistory.scrollTop = messageHistory.scrollHeight;
+
+  {% comment %} 채팅내용 {% endcomment %}
+  var roomName = {{ room_name_json }};
+  var chatSocket = new WebSocket(
+      'ws://' + window.location.host +
+      '/ws/chat/' + roomName + '/');
+  
+  chatSocket.onmessage = function(e) {
+      var data = JSON.parse(e.data);
+      var message = data['message'];
+      var vil = data['vil'];
+      var time = data['time'];
+      var counting = data['counting'];
+      var widthcounting = data['widthcounting'];
+      {% comment %} 채팅의 유저정보 {% endcomment %}
+      var nickname = data['nickname']
+      {% comment %} 페이지의 유저정보 {% endcomment %}
+      var userinfo = '{{ request.user.nickname }}'
+      var is_artist = data['is_artist']
+      var room_name = data['room_name']
+      var profileimageurl = data['profileimageurl']
+      
+      const element = document.getElementById('add_message');
+      const element2 = document.getElementById('score');
+      const element3 = document.getElementById('scorebox');
+      if (message != '') { // 공백처리 안함
+        if (vil == '1') { // 욕설이면
+          if (userinfo==nickname) {
+            Swal.fire({
+              title: '나쁜 말 하면 안돼요!!',
+              text: '아티스트도 사람이에요..사랑이 필요해요',
+              imageUrl: 'https://s3.getstickerpack.com/storage/uploads/sticker-pack/kitten-1/sticker_30.gif?77a06deb84e9ae57612907247fea7963',
+              imageWidth: 200,
+              imageHeight: 300, 
+              confirmButtonText: '-30포인트'
+            });
+            element2.parentNode.innerHTML = "";
+            element3.innerHTML += '<div class="progress-bar text-bg-warning" style="width:'+widthcounting+'%; background-color: purple" id="score">'+counting+'/1000</div>';
+          }
+        } else { // 욕설아니면 채팅등록
+          if (userinfo == room_name) { // 채팅방 주인이면
+            if (nickname == userinfo) { // 자기채팅은 오른쪽
+              element.innerHTML += (
+                '<div class="outgoing_msg"><div class="d-flex justify-content-between mb-4" style="width: 400px; float: right;"><div class="col-lg-10"><p class="fw-bold mb-0" style="float:right;">'+nickname+'</p><div class="card w-100" style=" border-radius: 15px;"><div class="card-body d-flex justify-content-between p-3"><p>'+message+'</p></div></div><p class="text-muted small mb-0" style="float:right;"><i class="far fa-clock"></i>'+time+'</p></div><div class="col-lg-3 px-0"><img src="'+profileimageurl+'" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" style="width:60px; height: 60px;"></div></div></div>'
+              )
+              element2.parentNode.innerHTML = "";
+              element3.innerHTML += '<div class="progress-bar text-bg-warning" style="width:'+widthcounting+'%; background-color: purple" id="score">'+counting+'/1000</div>';
+            } else { // 다른사람은 왼쪽
+              element.innerHTML += (
+                '<div class="d-flex justify-content-between mb-4" style="width: 300px;"><div class="col-lg-3p px-0"><img src="'+profileimageurl+'" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" style="width:60px; height: 60px;"></div><div class="col-lg-10"><p class="fw-bold mb-0">'+nickname+'</p><div class="card" style=" border-radius: 15px; width: 300px;"><div class="card-body d-flex justify-content-between p-3"><p>'+message+'</p></div></div><p class="text-muted small mb-0"><i class="far fa-clock"></i> '+time+'</p></div></div>'
+              )
+            }
+          } else { // 채팅방 주인이 아니면
+            if (nickname == room_name) { // 채팅방 주인껀 왼쪽
+              element.innerHTML += (
+                '<div class="d-flex justify-content-between mb-4" style="width: 300px;"><div class="col-lg-3 px-0"><img src="'+profileimageurl+'" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" style="width:60px; height: 60px;"></div><div class="col-lg-10"><p class="fw-bold mb-0">'+nickname+'</p><div class="card" style=" border-radius: 15px; width: 300px;"><div class="card-body d-flex justify-content-between p-3"><p>'+message+'</p></div></div><p class="text-muted small mb-0"><i class="far fa-clock"></i> '+time+'</p></div></div>'
+                )
+            } else { // 나머지 오른쪽 
+              element.innerHTML += (
+                '<div class="outgoing_msg "><div class="d-flex justify-content-between mb-4" style="width: 400px; float: right;"><div class="col-lg-10"><p class="fw-bold mb-0" style="float:right;">'+nickname+'</p><div class="card w-100" style=" border-radius: 15px;"><div class="card-body d-flex justify-content-between p-3"><p>'+message+'</p></div></div><p class="text-muted small mb-0" style="float:right;"><i class="far fa-clock"></i>'+time+'</p></div><div class="col-lg-3 px-0"><img src="'+profileimageurl+'" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" style="width:60px; height: 60px;"></div></div></div>'
+              )
+              if (nickname == userinfo) { // 자기채팅은 점수반영
+                element2.parentNode.innerHTML = "";
+                element3.innerHTML += '<div class="progress-bar text-bg-warning" style="width:'+widthcounting+'%; background-color: purple" id="score">'+counting+'/1000</div>';
+              }
+            }
+          }
+        }
+      }
+      $('.msg_history').scrollTop($('.msg_history').prop('scrollHeight'));
+  };
+  chatSocket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+  };
+  document.querySelector('#chat-message-input').focus();
+  document.querySelector('#chat-message-input').onkeyup = function(e) {
+      if (e.keyCode === 13) {  // enter, return
+          document.querySelector('#chat-message-submit').click();
+      }
+  };
+  document.querySelector('#chat-message-submit').onclick = function(e) {
+      var messageInputDom = document.querySelector('#chat-message-input');
+      var message = messageInputDom.value;
+      var userinfo = '{{ request.user }}';
+      var url = '{{ request.path }}'
+      chatSocket.send(JSON.stringify({
+          'message': message,
+          'userinfo': userinfo,
+          'url': url
+      }));
+      messageInputDom.value = '';
+  };
+</script>
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/aos.js' %}"></script>
+	<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+	<script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+	<script src="{% static 'js/scrollax.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+  {% endblock %}
+</body>
+</html>

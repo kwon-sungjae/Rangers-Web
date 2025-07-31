@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="TemplateMo">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <title>피드방</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'css/feed.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.css' %}">
+  <link rel="stylesheet" href="{% static 'css/피드.css' %}">
+  <link rel="stylesheet" href="{% static 'css/피드2.css' %}">
+  <style>
+    .form-group2 {
+      {% comment %} position: fixed; {% endcomment %}
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      float: right;
+     
+    }
+    
+  @font-face {
+            font-family: 'S-CoreDream-3Light';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+  
+  </style>
+  
+</head>
+
+<body style="font-family: 'S-CoreDream-3Light';">
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="/"><img src="{% static 'img/로고.png' %}" alt="" style="width: 110px;"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu 
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+          {% if user.is_authenticated %}
+          <li class="nav-item"><a href="/common/mypage" class="nav-link">{{ request.user }}</a></li>
+          <li class="nav-item"><a href="/common/logout" class="nav-link">Logout</a></li>
+          {% else %}
+          <li class="nav-item"><a href="/common/login" class="nav-link">로그인</a></li>
+          <li class="nav-item"><a href="/common/signup" class="nav-link">회원가입</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Header-->
+  <header class="feed-bg">
+    <section class="services">
+      {% if request.user == user %}
+      <div class="form-group2">
+        <form action="{% url 'feed:feed' user.nickname %}" method="post" class="artist-msg">
+          {% csrf_token %}
+          {% include "common/form_errors.html" %}
+          <input type="text" name="post" id="post" placeholder="팬들과 소통해주세요~" class="form-artist-msg" value="{{ afeedform.post.value|default_if_none:'' }}" required>
+          <!-- {{ artistfeedform.as_p }} -->
+          <button type='submit' name='artistfeed'>등록</button>
+        </form>
+      </div>
+      {% endif %}
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="owl-service-item owl-carousel">
+              {% for feed in artistfeed %}
+              <div class="item" style="border-style: none;">
+                <div class="img-control" style="margin-right: 85%;">
+                  <div class="icon">
+                    <img src="{{ user.profileimage.url }}" alt="" style="width: 60px; height: 60px; border-radius: 50%; position:relative; right: 5px; bottom: 0.5px;">
+                  </div> 
+                </div>
+                <div class="name" style="margin-right: 55%; margin-bottom: 0; ; position: relative; bottom: 43px; left: 5px; font-weight: bolder;  ">
+                  <h6>{{ feed.author }}</h6>
+                </div>
+                <div class="down-content" style=" padding-top: 10px; margin-top: -30px;">
+                  <p style="color: black;">{{ feed.post }} <br> {{ feed.create_date }}</p>
+                  {% if request.user == feed.author %}
+                    <a href='#' class='adelete btn btn-sm btn-outline-secondary' style="position: relative; bottom:  16px;"
+                    data-uri="{% url 'feed:afeed_delete' feed.id %}">삭제</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+  <div class='row'>
+    <div class='col-lg-8'>
+      <div class="fan-feed">
+        <form action="{% url 'feed:feed' user.nickname %}" method="post" class="search-location mt-md-5">
+          {% csrf_token %}
+          {% include "common/form_errors.html" %}
+          <div class="row justify-content-center">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="form-field" style="box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); border-radius: 40px;">
+                  <input type="text" class="form-control" name='post' id='post' placeholder="레인저스에 포스트를 남겨보세요" value="{{ ufeedform.post.value|default_if_none:'' }}" required>
+                  <button type='submit' name='userfeed'>등록</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      {% for feed in userfeed %}
+      {% if not feed.vilification %}
+      <div class="feed-container" style="padding-bottom: 5px; margin: 0 auto; ">
+        <div>
+          <div class="feed-list-wrap">
+            <div class="feed-list-view">
+              <div class="Header-wrap">
+                <div class="Header-group">
+                  <!-- <div class="profile-img2" style="background-image: url({{ feed.author.profileimage.url }}); "></div> -->
+                  <div class="header-name-wrap">
+                    <div class="header-nickname-wrap">
+                      <strong class="header-nickname">{{ feed.author }}</strong>
+                    </div>
+                    <div class="header-date-wrap">
+                      <span class="header-date">
+                        {{ feed.create_date }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="feed-content-wrap">
+                <div class="content-item row">
+                  <div class="content-text col-lg-11">
+                    {{ feed.post }}
+                  </div>
+                  <div class='col-lg-1'>
+                    {% if request.user == feed.author or request.user.nickname == user_nickname %}
+                    <a href='#' class='delete btn btn-sm btn-outline-secondary'
+                    data-uri="{% url 'feed:ufeed_delete' feed.id %}">삭제</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class='col-lg-4'>
+      <img src = '{% static "img/아이유 콘서트.jpg" %}' class="px-3 my-3">
+    </div>
+  </div>
+  {% block script %}
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/isotope.min.js' %}"></script>
+  <script src="{% static 'js/owl-carousel.js' %}"></script>
+  <script src="{% static 'js/lightbox.js' %}"></script>
+  <script src="{% static 'js/tabs.js' %}"></script>
+  <script src="{% static 'js/slick-slider.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
+    const adelete_elements = document.getElementsByClassName("adelete");
+    Array.from(adelete_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
+    var query = window.location.search;
+    var params = new URLSearchParams(query);
+    var message = params.get('message');
+    if (message == '1') {
+      Swal.fire({
+        title: '나쁜 말 하면 안돼요!!',
+        text: '아티스트도 사람이에요..사랑이 필요해요',
+        imageUrl: 'https://s3.getstickerpack.com/storage/uploads/sticker-pack/kitten-1/sticker_30.gif?77a06deb84e9ae57612907247fea7963',
+        imageWidth: 200,
+        imageHeight: 300, 
+        confirmButtonText: '확인'
+      });
+    }
+  </script>
+  {% endblock %}
+</body>
+
+</html>

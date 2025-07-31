@@ -1,0 +1,24 @@
+.card-body{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.card-body::-webkit-scrollbar{
+  display: none;
+}
+
+/* .list-unstyled{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.list-unstyled::-webkit-scrollbar{
+  display: none;
+} */
+
+ .text-muted{}
+
+ .card_header{
+  background-color:white;
+  border-bottom: none;
+ }
