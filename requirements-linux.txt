@@ -6,7 +6,7 @@ attrs==23.1.0
 autobahn==23.1.2
 Automat==22.10.0
 certifi==2023.5.7
-# cffi==1.15.1
+cffi==1.15.1
 channels==4.0.0
 channels-redis==4.1.0
 charset-normalizer==3.1.0
@@ -15,7 +15,7 @@ config==0.5.1
 constantly==15.1.0
 coreapi==2.3.3
 coreschema==0.0.4
-# cryptography==40.0.2
+cryptography==40.0.2
 daphne==4.0.0
 defusedxml==0.7.1
 Django==3.2.19
