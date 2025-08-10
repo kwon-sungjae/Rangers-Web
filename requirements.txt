@@ -56,7 +56,7 @@ pycparser==2.21
 Pygments==2.15.1
 PyJWT==2.7.0
 pyOpenSSL==23.1.1
-pypiwin32==223
+# pypiwin32==223
 PySocks==1.7.1
 python-dotenv==1.0.0
 python3-openid==3.2.0
