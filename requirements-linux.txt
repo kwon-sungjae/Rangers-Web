@@ -6,7 +6,7 @@ attrs==23.1.0
 autobahn==23.1.2
 Automat==22.10.0
 certifi==2023.5.7
-cffi==1.15.1
+# cffi==1.15.1
 channels==4.0.0
 channels-redis==4.1.0
 charset-normalizer==3.1.0
@@ -15,7 +15,7 @@ config==0.5.1
 constantly==15.1.0
 coreapi==2.3.3
 coreschema==0.0.4
-cryptography==40.0.2
+# cryptography==40.0.2
 daphne==4.0.0
 defusedxml==0.7.1
 Django==3.2.19
@@ -56,12 +56,12 @@ pycparser==2.21
 Pygments==2.15.1
 PyJWT==2.7.0
 pyOpenSSL==23.1.1
-pypiwin32==223
+# pypiwin32==223
 PySocks==1.7.1
 python-dotenv==1.0.0
 python3-openid==3.2.0
 pytz==2023.3
-pywin32==306
+# pywin32==306
 PyYAML==6.0
 redis==4.5.5
 regex==2023.5.5
@@ -83,7 +83,7 @@ transformers==4.29.2
 trio==0.22.0
 trio-websocket==0.10.2
 Twisted==22.10.0
-twisted-iocpsupport==1.0.3
+# twisted-iocpsupport==1.0.3
 txaio==23.1.1
 typing_extensions==4.5.0
 tzdata==2023.3
