@@ -7,6 +7,7 @@
 pip install -r req.txt
 
 3. 실행
-python manage.py runserver
+python manage.py runserver 
+- 세팅 설정 안됐다면 아래 로컬/서버 지정하여 서버 실행
 -> python manage.py runserver --settings=rangers.settings.local
 -> python manage.py runserver --settings=rangers.settings.prod

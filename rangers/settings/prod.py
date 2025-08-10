@@ -1,3 +1,3 @@
 from .base import *
 
-ALLOWED_HOSTS = ['43.200.120.132']
+ALLOWED_HOSTS = ['https://rangers-web.onrender.com']
