@@ -9,4 +9,4 @@ db.sqlite3
 venv/
 .vscode/
 .env
-.rangers_model/
+rangers_model/
