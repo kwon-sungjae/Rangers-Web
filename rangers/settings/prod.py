@@ -1,3 +1,5 @@
 from .base import *
 
-ALLOWED_HOSTS = ['https://rangers-web.onrender.com']
+DEBUG = False
+ALLOWED_HOSTS = ['rangers-web.onrender.com']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
