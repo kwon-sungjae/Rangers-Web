@@ -9,6 +9,21 @@ RANGERS는 **연예인 대상 악성 메시지 문제를 해결하기 위해 개
 
 ---
 
+## 📑 프로젝트 자료
+
+- 📂 [프로젝트 발표 자료 (PDF)](./RANGERS_PPT.pdf)  
+- 🎬 [시연 영상 다운로드 (MP4)](./RANGERS시연영상.mp4)  
+
+<p align="center">
+  <a href="./RANGERS시연영상.mp4">
+    <img src="./media/img/demo_thumbnail.png" alt="시연 영상 썸네일" width="600"/>
+  </a>
+</p>
+
+---
+
+---
+
 ## 📌 주요 기능
 
 - 회원가입 / 로그인 / 로그아웃  
